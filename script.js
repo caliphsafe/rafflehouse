@@ -72,6 +72,7 @@ if (confirmBtn) {
     });
 
     closeModal();
-    alert("You're in the raffle! 🎉 Reload the page to see updates.");
+alert("You're in the raffle! 🎉");
+location.reload(); // refresh to show progress and maybe winner
   });
 }
