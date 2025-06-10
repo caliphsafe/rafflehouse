@@ -34,7 +34,9 @@ if (raffleFeed) {
   querySnapshot.forEach((doc) => {
     const data = doc.data();
     const percentSold = 100 - (data.ticketsRemaining / data.totalTickets) * 100;
-    raffleFeed.innerHTML += `
+
+    const isClosed = data.raffleClosed === true;
+    const cardHTML = `
       <section class="raffle-card">
         <img src="${data.image}" alt="Product" class="product-img">
         <div class="raffle-info">
@@ -44,10 +46,13 @@ if (raffleFeed) {
             <div class="progress-bar" style="width: ${percentSold}%"></div>
           </div>
           <p><strong>${data.ticketsRemaining} of ${data.totalTickets} tickets remaining</strong></p>
-          <button class="raffle-btn" onclick="openModal('${data.name}', ${data.price})">🎟 Enter Raffle</button>
+          ${isClosed && data.winnerName
+            ? `<p class="winner-text">🏆 Winner: ${data.winnerName}</p>`
+            : `<button class="raffle-btn" onclick="openModal('${data.name}', ${data.price})">🎟 Enter Raffle</button>`}
         </div>
       </section>
     `;
+    raffleFeed.innerHTML += cardHTML;
   });
 }
 
