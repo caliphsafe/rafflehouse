@@ -5,6 +5,7 @@ import { firebaseConfig } from './firebase-config.js';
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// ADMIN FORM LOGIC
 const form = document.getElementById('raffleForm');
 if (form) {
   form.addEventListener('submit', async (e) => {
@@ -26,6 +27,7 @@ if (form) {
   });
 }
 
+// HOMEPAGE RAFFLE FEED LOGIC
 const raffleFeed = document.getElementById('raffleFeed');
 if (raffleFeed) {
   const querySnapshot = await getDocs(collection(db, "raffles"));
@@ -42,9 +44,20 @@ if (raffleFeed) {
             <div class="progress-bar" style="width: ${percentSold}%"></div>
           </div>
           <p><strong>${data.ticketsRemaining} of ${data.totalTickets} tickets remaining</strong></p>
-          <button class="raffle-btn" onclick="openModal('${data.name}')">🎟 Enter Raffle</button>
+          <button class="raffle-btn" onclick="openModal('${data.name}', ${data.price})">🎟 Enter Raffle</button>
         </div>
       </section>
     `;
   });
 }
+
+// MODAL LOGIC
+window.openModal = function(title, price) {
+  document.getElementById("modalTitle").innerText = title;
+  document.getElementById("modalPrice").innerText = price.toFixed(2);
+  document.getElementById("purchaseModal").classList.remove("hidden");
+};
+
+window.closeModal = function() {
+  document.getElementById("purchaseModal").classList.add("hidden");
+};
