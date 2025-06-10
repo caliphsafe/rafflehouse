@@ -32,7 +32,7 @@ body {
 
 /* Feed Layout */
 main {
-  padding-top: 100px; /* Push content below floating header */
+  padding-top: 140px; /* Push content below floating header */
 }
 
 #raffleFeed {
