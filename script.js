@@ -1,3 +1,4 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig } from './firebase-config.js';
@@ -17,17 +18,17 @@ if (raffleFeed) {
 
     const cardHTML = `
       <section class="raffle-card">
-        <img src="${data.image}" alt="Product" class="product-img">
+        <img src="\${data.image}" alt="Product" class="product-img">
         <div class="raffle-info">
-          <h2>${data.name}</h2>
-          <p>$${data.price.toFixed(2)} per ticket</p>
+          <h2>\${data.name}</h2>
+          <p>$\${data.price.toFixed(2)} per ticket</p>
           <div class="progress-wrapper">
-            <div class="progress-bar" style="width: ${percentSold}%"></div>
+            <div class="progress-bar" style="width: \${percentSold}%"></div>
           </div>
-          <p><strong>${data.ticketsRemaining} of ${data.totalTickets} tickets remaining</strong></p>
-          ${isClosed && data.winnerName
-            ? `<p class="winner-text">🏆 Winner: ${data.winnerName}</p>`
-            : `<button class="raffle-btn" onclick="openModal('${data.name}', '${docSnap.id}', ${data.price})">🎟 Enter Raffle</button>`}
+          <p><strong>\${data.ticketsRemaining} of \${data.totalTickets} tickets remaining</strong></p>
+          \${isClosed && data.winnerName
+            ? `<p class="winner-text">🏆 Winner: \${data.winnerName}</p>`
+            : `<button class="raffle-btn" onclick="openModal('\${data.name}', '\${docSnap.id}', \${data.price})">🎟 Enter Raffle</button>`}
         </div>
       </section>
     `;
@@ -50,30 +51,40 @@ window.closeModal = function() {
 const confirmBtn = document.getElementById("confirmEntryBtn");
 if (confirmBtn) {
   confirmBtn.addEventListener('click', async () => {
-    const name = document.getElementById("userName").value.trim();
     const email = document.getElementById("userEmail").value.trim();
     const address = document.getElementById("userAddress").value.trim();
+    const name = document.getElementById("userName").value.trim();
 
-    if (!name || !email || !address) {
+    if (!email || !address || !name) {
       alert("Please fill in all fields.");
       return;
     }
 
-    const entryRef = collection(db, `raffles/${currentRaffle.id}/entries`);
-    await addDoc(entryRef, {
-      name,
-      email,
-      address,
-      createdAt: new Date(),
-    });
+    try {
+      const response = await fetch("https://us-central1-rafflehouse-fdb72.cloudfunctions.net/createCheckoutSession", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          raffleId: currentRaffle.id,
+          raffleName: currentRaffle.title,
+          amount: currentRaffle.price,
+          email,
+          address,
+          name
+        })
+      });
 
-    const raffleDocRef = doc(db, "raffles", currentRaffle.id);
-    await updateDoc(raffleDocRef, {
-      ticketsRemaining: increment(-1)
-    });
-
-    closeModal();
-    alert("You're in the raffle! 🎉");
-    location.reload(); // refresh to show progress and maybe winner
+      const result = await response.json();
+      if (result.url) {
+        window.location.href = result.url; // Redirect to Stripe Checkout
+      } else {
+        alert("Failed to create payment session.");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      alert("An error occurred while processing your payment.");
+    }
   });
 }
