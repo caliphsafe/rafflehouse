@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raffle House</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="script.js" defer></script>
+</head>
+<body>
+  <main id="raffleFeed"></main>
+
+  <div id="purchaseModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Confirm Raffle Entry</h3>
+      <p>Pay $5 to enter for <strong id="modalTitle"></strong></p>
+      <input type="email" placeholder="Your Email">
+      <input type="text" placeholder="Shipping Address">
+      <button class="raffle-btn">Pay & Enter</button>
+      <button class="close-btn" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    function openModal(title) {
+      document.getElementById("modalTitle").innerText = title;
+      document.getElementById("purchaseModal").classList.remove("hidden");
+    }
+    function closeModal() {
+      document.getElementById("purchaseModal").classList.add("hidden");
+    }
+  </script>
+</body>
+</html>

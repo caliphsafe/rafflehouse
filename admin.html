@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Add New Raffle</title>
+  <link rel="stylesheet" href="admin.css">
+  <script type="module" src="script.js" defer></script>
+</head>
+<body>
+  <div class="admin-container">
+    <h1>Add New Raffle</h1>
+    <form id="raffleForm">
+      <label>Product Name</label>
+      <input type="text" id="productName" required>
+      <label>Product Image URL</label>
+      <input type="url" id="productImage" required>
+      <label>External Product Link</label>
+      <input type="url" id="productLink" required>
+      <label>Description</label>
+      <textarea id="description" rows="4" required></textarea>
+      <label>Price Per Ticket ($)</label>
+      <input type="number" id="ticketPrice" required>
+      <label>Total Number of Tickets</label>
+      <input type="number" id="totalTickets" required>
+      <button type="submit">Create Raffle</button>
+    </form>
+    <p id="successMessage" class="hidden">✅ Raffle added successfully!</p>
+  </div>
+</body>
+</html>
