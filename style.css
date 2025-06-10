@@ -5,96 +5,96 @@
   box-sizing: border-box;
 }
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Helvetica Neue', 'Segoe UI', sans-serif;
   background: #0a0a0f;
-  color: #ffffff;
+  color: #eaeaea;
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
   height: 100vh;
 }
 
-/* Logo Header */
-header {
+/* Floating Logo Header */
+.floating-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 10, 15, 0.95);
+  display: flex;
+  justify-content: center;
   padding: 1rem 0;
-  text-align: center;
+  z-index: 1000;
+  border-bottom: 1px solid #1a1a1f;
 }
 .logo {
-  width: 100px;
+  width: 80px;
   height: auto;
-  filter: drop-shadow(0 0 8px #0ff);
 }
 
 /* Feed Layout */
+main {
+  padding-top: 100px; /* Push content below floating header */
+}
+
 #raffleFeed {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
 }
 
 /* Each Raffle Card */
 .raffle-card {
-  scroll-snap-align: start;
-  height: 100vh;
-  position: relative;
+  background: #14141f;
+  border: 1px solid #2c2c38;
+  border-radius: 12px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 2rem;
-  background: #05050a;
-  border-top: 1px solid #222;
+  max-width: 600px;
+  margin: auto;
 }
 
 .product-img {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
-  z-index: 1;
-  opacity: 0.3;
+  display: block;
+  border-bottom: 1px solid #2c2c38;
 }
 
 .raffle-info {
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 1rem;
-  border-radius: 12px;
-  backdrop-filter: blur(4px);
-  border: 1px solid #222;
-  box-shadow: 0 0 10px #111;
+  padding: 1.25rem;
 }
 
 .raffle-info h2 {
-  font-size: 1.6rem;
-  color: #0ff;
+  font-size: 1.5rem;
+  color: #00ffee;
   margin-bottom: 0.5rem;
-  text-shadow: 0 0 5px #0ff;
 }
 .raffle-info p {
   margin-bottom: 0.5rem;
-  color: #ccc;
+  color: #aaa;
 }
 
-/* Neon Button */
+/* Button Style */
 .raffle-btn {
-  padding: 0.8rem 1.2rem;
+  padding: 0.75rem 1.5rem;
   background: #00ffee;
   color: #000;
-  border: none;
-  border-radius: 8px;
   font-weight: bold;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px #00ffee, 0 0 20px #00ffee;
+  transition: background 0.3s ease;
 }
 .raffle-btn:hover {
-  background: #0ff;
-  box-shadow: 0 0 15px #0ff, 0 0 30px #0ff;
+  background: #00e6d4;
 }
 
 /* Progress Bar */
 .progress-wrapper {
-  background: rgba(255, 255, 255, 0.1);
+  background: #1f1f29;
   border-radius: 8px;
   height: 10px;
   margin: 0.5rem 0 1rem;
@@ -102,15 +102,8 @@ header {
 }
 .progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #00ffee, #ae2fff);
+  background: #00ffee;
   transition: width 0.6s ease;
-}
-.progress-bar.pulse {
-  animation: pulseGlow 1.5s infinite ease-in-out;
-}
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 5px #00ffee; }
-  50% { box-shadow: 0 0 20px #ae2fff; }
 }
 
 /* Modal */
@@ -120,7 +113,7 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 10, 20, 0.95);
+  background: rgba(10, 10, 20, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -130,14 +123,13 @@ header {
   display: none;
 }
 .modal-content {
-  background: #12121a;
+  background: #1b1b26;
   color: #fff;
   padding: 2rem;
   border-radius: 10px;
   max-width: 400px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 0 20px #0ff;
 }
 .modal-content input {
   display: block;
@@ -145,18 +137,17 @@ header {
   margin: 0.75rem 0;
   padding: 0.5rem;
   border: 1px solid #333;
-  background: #1c1c2b;
+  background: #272737;
   color: #fff;
   border-radius: 6px;
 }
 .modal-content input:focus {
   outline: none;
   border-color: #00ffee;
-  box-shadow: 0 0 5px #00ffee;
 }
 .close-btn {
-  background: transparent;
-  color: #888;
+  background: none;
+  color: #999;
   margin-top: 1rem;
   border: none;
   cursor: pointer;
