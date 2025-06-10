@@ -1,4 +1,3 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { firebaseConfig } from './firebase-config.js';
@@ -51,16 +50,18 @@ window.closeModal = function() {
 const confirmBtn = document.getElementById("confirmEntryBtn");
 if (confirmBtn) {
   confirmBtn.addEventListener('click', async () => {
+    const name = document.getElementById("userName").value.trim();
     const email = document.getElementById("userEmail").value.trim();
     const address = document.getElementById("userAddress").value.trim();
 
-    if (!email || !address) {
-      alert("Please enter both email and shipping address.");
+    if (!name || !email || !address) {
+      alert("Please fill in all fields.");
       return;
     }
 
     const entryRef = collection(db, `raffles/${currentRaffle.id}/entries`);
     await addDoc(entryRef, {
+      name,
       email,
       address,
       createdAt: new Date(),
@@ -72,7 +73,7 @@ if (confirmBtn) {
     });
 
     closeModal();
-alert("You're in the raffle! 🎉");
-location.reload(); // refresh to show progress and maybe winner
+    alert("You're in the raffle! 🎉");
+    location.reload(); // refresh to show progress and maybe winner
   });
 }
