@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,28 +15,20 @@
   <header class="floating-header">
     <img src="assets/rf_logo.png" alt="Raffle House Logo" class="logo" />
   </header>
-<br/> <br/> <br/><br/>
+  <div style="height: 70px;"></div>
+
   <main id="raffleFeed"></main>
+
   <div id="purchaseModal" class="modal hidden">
     <div class="modal-content">
       <h3>Confirm Raffle Entry</h3>
-    <p>Pay $<span id="modalPrice"></span> to enter for <strong id="modalTitle"></strong></p>
-      <input type="email" placeholder="Your Email">
-      <input type="text" placeholder="Shipping Address">
-      <button class="raffle-btn">Pay & Enter</button>
+      <p>Pay $<span id="modalPrice"></span> to enter for <strong id="modalTitle"></strong></p>
+      <input id="userEmail" type="email" placeholder="Your Email">
+      <input id="userAddress" type="text" placeholder="Shipping Address">
+      <button id="confirmEntryBtn" class="raffle-btn">Pay & Enter</button>
       <button class="close-btn" onclick="closeModal()">Cancel</button>
     </div>
   </div>
-
-  <script>
-    function openModal(title) {
-      document.getElementById("modalTitle").innerText = title;
-      document.getElementById("purchaseModal").classList.remove("hidden");
-    }
-    function closeModal() {
-      document.getElementById("purchaseModal").classList.add("hidden");
-    }
-  </script>
 
 </body>
 </html>
